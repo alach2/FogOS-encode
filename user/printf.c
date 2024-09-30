@@ -70,6 +70,9 @@ vprintf(int fd, const char *fmt, va_list ap)
         printint(fd, va_arg(ap, uint64), 10, 0);
       } else if(c == 'x') {
         printint(fd, va_arg(ap, int), 16, 0);
+      } else if(c == 'h') {
+        unsigned char byte = (unsigned char)va_arg(ap, int);
+        printint(fd, (unsigned int)byte, 16, 0);
       } else if(c == 'p') {
         printptr(fd, va_arg(ap, uint64));
       } else if(c == 's'){

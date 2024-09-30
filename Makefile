@@ -87,7 +87,7 @@ $U/initcode: $U/initcode.S
 tags: $(OBJS) _init
 	etags *.S *.c
 
-ULIB = $U/ulib.o $U/usys.o $U/printf.o $U/umalloc.o
+ULIB = $U/ulib.o $U/usys.o $U/printf.o $U/umalloc.o $U/base64.o $U/sha256.o $U/arcfour.o
 
 _%: %.o $(ULIB)
 	$(LD) $(LDFLAGS) -T $U/user.ld -o $@ $^
@@ -117,7 +117,9 @@ mkfs/mkfs: mkfs/mkfs.c $K/fs.h $K/param.h
 
 UPROGS=\
 	$U/_cat\
+	$U/_decode\
 	$U/_echo\
+	$U/_encode\
 	$U/_forktest\
 	$U/_grep\
 	$U/_init\
@@ -133,8 +135,8 @@ UPROGS=\
 	$U/_wc\
 	$U/_zombie\
 
-fs.img: mkfs/mkfs README.md $(UPROGS)
-	mkfs/mkfs fs.img README.md $(UPROGS)
+fs.img: mkfs/mkfs README.md project1.txt encrypted.txt $(UPROGS)
+	mkfs/mkfs fs.img README.md project1.txt encrypted.txt $(UPROGS)
 
 -include kernel/*.d user/*.d
 
